@@ -3,20 +3,57 @@ package ClassAndObject;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Case: A car dealership wants some program to make their job easier. In this shop, they have any type of car,
+ * and every car has manufacture, name, color, and speed. Your target is to make a program that can help this
+ * shop when they want to see all cars that they have and add new cars to the list. They also want to see the
+ * detail of a car or it's manufacture
+ *
+ * Entities:
+ * * Car
+ * * Manufacture
+ *
+ * Properties:
+ * * Car:
+ *   * name
+ *   * color
+ *   * speed
+ *   * manufacture
+ *
+ * * Manufacture
+ *   * name
+ *   * description
+ */
 public class Main {
+    /**
+     * Define list of manufacture and cars
+     */
     private static final ArrayList<Manufacture> manufactures = new ArrayList<>();
     private static final ArrayList<Car> cars = new ArrayList<>();
 
+    /**
+     * Define scanner for user input
+     */
     private static final Scanner in = new Scanner(System.in);
 
+    /**
+     * Define variable that indicate the system is running
+     */
     private static boolean running = false;
 
+    /**
+     * Method main, method that will be call once the program is started.
+     * @param args
+     */
     public static void main(String[] args) {
+        // Set running indicator to true
         running = true;
 
+        // Init manufactures and cars
         initManufactures();
         initCars();
 
+        // loop the program if running is true
         while (running) {
             menu();
         }

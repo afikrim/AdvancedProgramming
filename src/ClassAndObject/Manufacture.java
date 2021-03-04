@@ -1,5 +1,10 @@
 package ClassAndObject;
 
+/**
+ * Properties:
+ * * name
+ * * description
+ */
 public class Manufacture {
     private String name;
     private String description;

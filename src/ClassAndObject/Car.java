@@ -1,5 +1,12 @@
 package ClassAndObject;
 
+/**
+ * Properties:
+ * * name
+ * * color
+ * * speed
+ * * manufacture
+ */
 public class Car {
     private String name;
     private String color;
