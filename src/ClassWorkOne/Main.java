@@ -1,6 +1,5 @@
 package ClassWorkOne;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -24,66 +23,44 @@ public class Main {
     }
 
     private static void initBooks() {
-        Book a = new Book();
-        Book b = new Book();
-        Book c = new Book();
-        Book d = new Book();
-        Book e = new Book();
-        Book f = new Book();
-        Book g = new Book();
+        Author authorA = new Author("Author A", "Biography", "1985-09-13");
+        Author[] authors = {authorA};
 
-        a.setTitle("Book A");
-        a.setDescription("Description of Book A");
-        a.setYear(2000);
-        a.setCategoryIndex(0);
-        a.addAuthor("Author A");
-
-        b.setTitle("Book B");
-        b.setDescription("Description of Book B");
-        b.setYear(2000);
-        b.setCategoryIndex(1);
-        b.addAuthor("Author B");
-
-        c.setTitle("Book C");
-        c.setDescription("Description of Cook C");
-        c.setYear(2000);
-        c.setCategoryIndex(2);
-        c.addAuthor("Author C");
-
-        d.setTitle("Book D");
-        d.setDescription("Description of Dook D");
-        d.setYear(2000);
-        d.setCategoryIndex(3);
-        d.addAuthor("Author D");
-        d.addAuthor("Author A");
-
-        e.setTitle("Book E");
-        e.setDescription("Description of Eook E");
-        e.setYear(2000);
-        e.setCategoryIndex(4);
-        e.addAuthor("Author E");
-
-        f.setTitle("Book F");
-        f.setDescription("Description of Fook F");
-        f.setYear(2000);
-        f.setCategoryIndex(5);
-        f.addAuthor("Author F");
-
-        g.setTitle("Book G");
-        g.setDescription("Description of Gook G");
-        g.setYear(2000);
-        g.setCategoryIndex(6);
-        g.addAuthor("Author E");
-        g.addAuthor("Author F");
-        g.addAuthor("Author G");
+        Book a = new Book("Book A", "Description of Book A", 2000, 0, Arrays.asList(authors));
+        Book b = new Book("Book B", "Description of Book B", 2000, 0, Arrays.asList(authors));
 
         books.add(a);
         books.add(b);
-        books.add(c);
-        books.add(d);
-        books.add(e);
-        books.add(f);
-        books.add(g);
+
+        System.out.println(compareBook(a, b) + " %");
+    }
+
+    private static float compareBook(Book x, Book y) {
+        String titleX = x.getTitle();
+        String titleY = y.getTitle();
+
+        int yangsama = 0;
+        float percentage = 0;
+
+        if (titleX.length() > titleY.length()) {
+            for (int i = 0; i < titleY.length(); i++) {
+                if (titleX.charAt(i) == titleY.charAt(i)) {
+                    yangsama += 1;
+                }
+            }
+
+            percentage = (float)yangsama / titleY.length() * 100;
+        } else {
+            for (int i = 0; i < titleX.length(); i++) {
+                if (titleX.charAt(i) == titleY.charAt(i)) {
+                    yangsama += 1;
+                }
+            }
+
+            percentage = (float)yangsama / titleX.length() * 100;
+        }
+
+        return percentage;
     }
 
     private static void newCategory() {
@@ -114,10 +91,11 @@ public class Main {
         System.out.print("Category\t: ");
         x.setCategoryIndex(in.nextInt() - 1);
 
-        System.out.println("Author(s) [Separate using comma (,) if more than one]: ");
-        in.nextLine();
-        String[] authors = in.nextLine().split(",");
-        x.setAuthors(Arrays.asList(authors));
+        // TODO: insert author
+        // System.out.println("Author(s) [Separate using comma (,) if more than one]: ");
+        // in.nextLine();
+        // String[] authors = in.nextLine().split(",");
+        // x.setAuthors(Arrays.asList(authors));
 
         x.display(categories);
 

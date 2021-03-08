@@ -8,7 +8,23 @@ public class Book {
     private String description;
     private int year;
     private int categoryIndex;
-    private ArrayList<String> authors = new ArrayList<>();
+    private ArrayList<Author> authors = new ArrayList<>();
+
+    public Book() {}
+
+    public Book(
+        String title,
+        String description,
+        int year,
+        int categoryIndex,
+        List<Author> authors
+    ) {
+        this.title = title;
+        this.description = description;
+        this.year = year;
+        this.categoryIndex = categoryIndex;
+        this.authors = new ArrayList<Author>(authors);
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -34,11 +50,11 @@ public class Book {
         return categoryIndex;
     }
 
-    public void setAuthors(List<String> authors) {
-        this.authors = new ArrayList<String>(authors);
+    public void setAuthors(List<Author> authors) {
+        this.authors = new ArrayList<Author>(authors);
     }
 
-    public void addAuthor(String author) {
+    public void addAuthor(Author author) {
         this.authors.add(author);
     }
 
@@ -49,9 +65,12 @@ public class Book {
     private String prepareAuthors() {
         StringBuilder authors = new StringBuilder();
 
-        for (String author: this.authors) {
+        // String authors = "";
+
+        for (Author author: this.authors) {
             authors.append("\n\t- ");
-            authors.append(author);
+            authors.append(author.getName());
+            authors.append(1234);
         }
 
         return authors.toString();
