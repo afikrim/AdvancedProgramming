@@ -109,9 +109,8 @@ public class Book {
     private String prepareAuthors(List<Author> authors) {
         StringBuilder authorsString = new StringBuilder();
 
-        for (int i = 0; i < authors.size(); i += 1) {
-            if (!authorIndexes.contains(i)) continue;
-            Author author = authors.get(i);
+        for (int authorIndex: authorIndexes) {
+            Author author = authors.get(authorIndex);
 
             authorsString.append("\n\t- ");
             authorsString.append(author.getName());

@@ -1,0 +1,3 @@
+Book A;2000;Description of A;Author A,Author B,Author C;Teknologi
+Book B;2000;Description of B;Author A,Author C;Filsafat
+Book C;2001;Description of Book C;Author B,Author C,Author D;Filsafat

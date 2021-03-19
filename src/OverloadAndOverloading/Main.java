@@ -1,11 +1,19 @@
 package OverloadAndOverloading;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    private static final String DEFAULT_ERROR = "Oops! Something went wrong.";
+    private static final String FILE_NOT_FOUND = "File not found, please make sure that the path is right.";
     private static final String SEPARATOR = "================================";
     private static ArrayList<Book> books = new ArrayList<>();
     private static ArrayList<Author> authors = new ArrayList<>();
@@ -16,53 +24,137 @@ public class Main {
     private static Scanner in = new Scanner(System.in);
 
     private static void initCategories() {
-        categories.add("Teknologi");
-        categories.add("Filsafat");
-        categories.add("Sejarah");
-        categories.add("Agama");
-        categories.add("Psikologi");
-        categories.add("Politik");
-        categories.add("Fiksi");
+        try {
+            String path = "/home/azizf/Documents/Colleges/6th Semester/LabAssistant/AdvancedProgramming/Code/src/OverloadAndOverloading/listCategories.txt";
+            FileReader fr = new FileReader(path);
+            BufferedReader br = new BufferedReader(fr);
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                categories.add(line);
+            }
+            br.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(FILE_NOT_FOUND);
+        } catch (IOException e) {
+            System.out.println(DEFAULT_ERROR);
+        }
+    }
+
+    private static void saveCategories() {
+        try {
+            String path = "/home/azizf/Documents/Colleges/6th Semester/LabAssistant/AdvancedProgramming/Code/src/OverloadAndOverloading/listCategories.txt";
+            FileWriter fw = new FileWriter(path);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            for (String category : categories) {
+                bw.write(category);
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            System.out.println(DEFAULT_ERROR);
+        }
     }
 
     private static void initAuthors() {
-        Author a = new Author("Author A", "A", "Biography of author A");
-        Author b = new Author("Author B", "B", "Biography of author B");
-        Author c = new Author("Author C", "C", "Biography of author C");
-        Author d = new Author("Author D", "D", "Biography of author D");
-        Author e = new Author("Author E", "E", "Biography of author E");
+        try {
+            String path = "/home/azizf/Documents/Colleges/6th Semester/LabAssistant/AdvancedProgramming/Code/src/OverloadAndOverloading/listAuthors.txt";
+            FileReader fr = new FileReader(path);
+            BufferedReader br = new BufferedReader(fr);
 
-        authors.add(a);
-        authors.add(b);
-        authors.add(c);
-        authors.add(d);
-        authors.add(e);
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] authorData = line.split(";");
+
+                authors.add(new Author(authorData[0], authorData[1], authorData[2]));
+            }
+            br.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(FILE_NOT_FOUND);
+        } catch (IOException e) {
+            System.out.println(DEFAULT_ERROR);
+        }
+    }
+
+    private static void saveAuthors() {
+        try {
+            String path = "/home/azizf/Documents/Colleges/6th Semester/LabAssistant/AdvancedProgramming/Code/src/OverloadAndOverloading/listAuthors.txt";
+            FileWriter fw = new FileWriter(path);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            for (Author author : authors) {
+                bw.write(author.getName() + ";" + author.getPenName() + ";" + author.getBiography());
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            System.out.println(DEFAULT_ERROR);
+        }
     }
 
     private static void initBooks() {
-        List<Integer> bookAAuthors = new ArrayList<>(Arrays.asList(0, 1));
-        List<Integer> bookBAuthors = new ArrayList<>(Arrays.asList(2, 3));
-        List<Integer> bookCAuthors = new ArrayList<>(Arrays.asList(3));
-        List<Integer> bookDAuthors = new ArrayList<>(Arrays.asList(1, 4));
-        List<Integer> bookEAuthors = new ArrayList<>(Arrays.asList(0, 1, 3));
-        List<Integer> bookFAuthors = new ArrayList<>(Arrays.asList(2));
-        List<Integer> bookGAuthors = new ArrayList<>(Arrays.asList(3));
+        try {
+            String path = "/home/azizf/Documents/Colleges/6th Semester/LabAssistant/AdvancedProgramming/Code/src/OverloadAndOverloading/listBooks.txt";
+            FileReader fr = new FileReader(path);
+            BufferedReader br = new BufferedReader(fr);
 
-        Book a = new Book("Book A", "Description of Book A", 2000, 0, bookAAuthors);
-        Book b = new Book("Book B", "Description of Book B", 2000, 1, bookBAuthors);
-        Book c = new Book("Book C", "Description of Book C", 2000, 2, bookCAuthors);
-        Book d = new Book("Book D", "Description of Book D", 2000, 3, bookDAuthors);
-        Book e = new Book("Book E", "Description of Book E", 2000, 4, bookEAuthors);
-        Book f = new Book("Book F", "Description of Book F", 2000, 5, bookFAuthors);
-        Book g = new Book("Book G", "Description of Book G", 2000, 6, bookGAuthors);
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] bookData = line.split(";");
 
-        books.add(a);
-        books.add(b);
-        books.add(c);
-        books.add(d);
-        books.add(e);
-        books.add(f);
-        books.add(g);
+                List<String> bookDataAuthors = new ArrayList<>(Arrays.asList(bookData[3].split(",")));
+                List<Integer> authorIndexes = new ArrayList<>();
+
+                for (int i = 0; i < authors.size(); i += 1) {
+                    if (bookDataAuthors.contains(authors.get(i).getName()))
+                        authorIndexes.add(i);
+                }
+
+                int categoryIndex = 0;
+
+                for (int i = 0; i < categories.size(); i += 1) {
+                    if (categories.get(i).equals(bookData[4]))
+                        categoryIndex = i;
+                }
+
+                books.add(new Book(bookData[0], bookData[2], Integer.parseInt(bookData[1].replace(" ", "")),
+                        categoryIndex, authorIndexes));
+            }
+            br.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(FILE_NOT_FOUND);
+        } catch (IOException e) {
+            System.out.println(DEFAULT_ERROR);
+        }
+    }
+
+    private static void saveBooks() {
+        try {
+            String path = "/home/azizf/Documents/Colleges/6th Semester/LabAssistant/AdvancedProgramming/Code/src/OverloadAndOverloading/listBooks.txt";
+            FileWriter fw = new FileWriter(path);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            for (Book book : books) {
+                StringBuilder sb = new StringBuilder(
+                        book.getTitle() + ";" + book.getYear() + ";" + book.getDescription() + ";");
+
+                for (int i = 0; i < book.getAuthorIndexes().size(); i += 1) {
+                    int authorIndex = book.getAuthorIndexes().get(i);
+
+                    sb.append(i + 1 == book.getAuthorIndexes().size() ? authors.get(authorIndex).getName() + ";"
+                            : authors.get(authorIndex).getName() + ",");
+                }
+
+                sb.append(categories.get(book.getCategoryIndex()));
+
+                bw.write(sb.toString());
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            System.out.println(DEFAULT_ERROR);
+        }
     }
 
     private static void printCategories() {
@@ -76,8 +168,7 @@ public class Main {
     private static void printAuthors() {
         System.out.println(SEPARATOR);
         for (int i = 0; i < authors.size(); i++) {
-            System.out.println((i + 1) + ". " + authors.get(i).getName()
-                + " [" + authors.get(i).getPenName() + "]");
+            System.out.println((i + 1) + ". " + authors.get(i).getName() + " [" + authors.get(i).getPenName() + "]");
         }
         System.out.println(SEPARATOR);
     }
@@ -87,8 +178,7 @@ public class Main {
         for (int i = 0; i < books.size(); i++) {
             Book x = books.get(i);
 
-            System.out.println((i + 1) + ". " + x.getTitle()
-                + " [" + categories.get(x.getCategoryIndex()) + "]");
+            System.out.println((i + 1) + ". " + x.getTitle() + " [" + categories.get(x.getCategoryIndex()) + "]");
         }
         System.out.println(SEPARATOR);
     }
@@ -130,7 +220,7 @@ public class Main {
         in.nextLine();
         String[] authorIndexesString = in.nextLine().split(",");
 
-        for (String authorIndexString: authorIndexesString) {
+        for (String authorIndexString : authorIndexesString) {
             authorIndexes.add(Integer.parseInt(authorIndexString));
         }
 
@@ -205,13 +295,15 @@ public class Main {
 
         if (xLen > yLen) {
             for (int i = 0; i < yLen; i += 1) {
-                if (x.charAt(i) == y.charAt(i)) sameChars += 1;
+                if (x.charAt(i) == y.charAt(i))
+                    sameChars += 1;
             }
 
             samePercentage = (float) sameChars / xLen;
         } else {
             for (int i = 0; i < xLen; i += 1) {
-                if (x.charAt(i) == y.charAt(i)) sameChars += 1;
+                if (x.charAt(i) == y.charAt(i))
+                    sameChars += 1;
             }
 
             samePercentage = (float) sameChars / yLen;
@@ -230,13 +322,15 @@ public class Main {
 
         if (xLen > yLen) {
             for (int i = 0; i < yLen; i += 1) {
-                if (x.charAt(i) == y.charAt(i)) sameChars += 1;
+                if (x.charAt(i) == y.charAt(i))
+                    sameChars += 1;
             }
 
             samePercentage = (float) sameChars / xLen;
         } else {
             for (int i = 0; i < xLen; i += 1) {
-                if (x.charAt(i) == y.charAt(i)) sameChars += 1;
+                if (x.charAt(i) == y.charAt(i))
+                    sameChars += 1;
             }
 
             samePercentage = (float) sameChars / yLen;
@@ -269,56 +363,63 @@ public class Main {
         System.out.println("\n");
 
         switch (index) {
-            case 1:
-                printBooks();
-                break;
-            case 2:
-                printCategories();
-                break;
-            case 3:
-                printAuthors();
-                break;
-            case 4:
-                printBooks();
-                System.out.print("Book number: ");
-                int bookIndex = in.nextInt();
-                printBookDetail(bookIndex - 1);
-                break;
-            case 5:
-                printAuthors();
-                System.out.print("Author number: ");
-                int authorIndex = in.nextInt();
-                printAuthorDetail(authorIndex - 1);
-                break;
-            case 6:
-                printBooks();
-                System.out.print("Book 1: ");
-                int xIndex = in.nextInt();
-                System.out.print("Book 2: ");
-                int yIndex = in.nextInt();
-                float samePercentage = compareBooks(books.get(xIndex - 1), books.get(yIndex - 1));
-                System.out.println("Same Percentage: " + samePercentage + " %");
-                break;
-            case 7:
-                newBook();
-                break;
-            case 8:
-                newCategory();
-                break;
-            case 9:
-                newAuthor();
-                break;
-            case 0:
-                running = false;
-                break;
-            default:
-                System.out.println("We deeply apologize for the inconvenient, but this choice (" + index + ") still not available.");
+        case 1:
+            printBooks();
+            break;
+        case 2:
+            printCategories();
+            break;
+        case 3:
+            printAuthors();
+            break;
+        case 4:
+            printBooks();
+            System.out.print("Book number: ");
+            int bookIndex = in.nextInt();
+            printBookDetail(bookIndex - 1);
+            break;
+        case 5:
+            printAuthors();
+            System.out.print("Author number: ");
+            int authorIndex = in.nextInt();
+            printAuthorDetail(authorIndex - 1);
+            break;
+        case 6:
+            printBooks();
+            System.out.print("Book 1: ");
+            int xIndex = in.nextInt();
+            System.out.print("Book 2: ");
+            int yIndex = in.nextInt();
+            float samePercentage = compareBooks(books.get(xIndex - 1), books.get(yIndex - 1));
+            System.out.println("Same Percentage: " + samePercentage + " %");
+            break;
+        case 7:
+            newBook();
+            break;
+        case 8:
+            newCategory();
+            break;
+        case 9:
+            newAuthor();
+            break;
+        case 0:
+            System.out.println("Saving data...");
+            saveCategories();
+            saveAuthors();
+            saveBooks();
+            System.out.println("Data saved.");
+
+            running = false;
+            break;
+        default:
+            System.out.println(
+                    "We deeply apologize for the inconvenient, but this choice (" + index + ") still not available.");
         }
 
         System.out.println("\n");
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         running = true;
 
         initCategories();
