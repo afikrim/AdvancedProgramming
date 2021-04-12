@@ -1,0 +1,3 @@
+name;manufactures;color;platenumber;available;idNum,name,address
+Xenia;Daihatsu;black;AB 5234 CL;false;918239019,Mahmudi,JaTim
+Xenia;Daihatsu;silver;AB 3434 CL;true
