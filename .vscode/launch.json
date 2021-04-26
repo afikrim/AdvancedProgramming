@@ -1,0 +1,47 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "ClassworkThree.Main",
+            "projectName": "Code_940c0c4a"
+        },
+        {
+            "type": "java",
+            "name": "Launch Example One",
+            "request": "launch",
+            "mainClass": "ClassAndObject.Main",
+            "projectName": "Code_940c0c4a",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Launch ClassWorkOne",
+            "request": "launch",
+            "mainClass": "ClassWorkOne.Main",
+            "projectName": "Code_940c0c4a",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Launch ClassWorkTwo",
+            "request": "launch",
+            "mainClass": "ClassWorkTwo.Main",
+            "projectName": "Code_940c0c4a",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Launch OverloadAndOverloading",
+            "request": "launch",
+            "mainClass": "OverloadAndOverloading.Main",
+            "projectName": "Code_940c0c4a",
+            "console": "integratedTerminal"
+        }
+    ]
+}
